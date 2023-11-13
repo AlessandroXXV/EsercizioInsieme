@@ -2,13 +2,15 @@ import java.util.Scanner;
 
 public class Login {
 
-    public static int accesso(boolean condizione)
+    public static void accesso(boolean condizione)
     {   
         boolean accessoAccount = false;
+        int count = 5; 
         Scanner scanner = new Scanner(System.in); 
-        while (!accessoAccount) {
-            System.out.println("Inserisci username e password");
+        while (!accessoAccount) 
         {
+            System.out.println("Inserisci username e password");
+            
             System.out.print("Username: ");
             String username = scanner.nextLine(); 
             String password = scanner.nextLine();
@@ -19,19 +21,14 @@ public class Login {
                 {
                     System.out.println("Accesso effettuato");
                     accessoAccount = true; 
-                }else
+                }else 
                 {
                     System.out.println("Le credenziali sono errate");
+                    count--; 
                 }
+                
             }
-        }
-        }
         
-
-
-
-
-        return 0; 
+        }
     }
-    
 }
