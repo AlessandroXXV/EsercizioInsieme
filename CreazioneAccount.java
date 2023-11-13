@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class CreazioneAccount
 {
    // Attributi
-   ArrayList<Utente> utenti = new ArrayList<Utente>();
+   static ArrayList<Utente> utenti = new ArrayList<Utente>();
    Scanner input;
 
    // Costruttore
