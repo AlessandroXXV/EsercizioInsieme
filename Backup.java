@@ -1,16 +1,11 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-  
+import java.util.ArrayList;  
 
 public class Backup {
     
-    public void backupDati(ArrayList<Utente> utenti)
+    public static void backupDati(ArrayList<Utente> utenti)
     {
         String path = "C:\\Users\\aledr\\OneDrive - Politecnico di Milano\\LEZIONI\\MATERIE SPECIALISTICHE\\JavaWeb\\src\\EsercizioInsieme\\backup.txt"; 
         

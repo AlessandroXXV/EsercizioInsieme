@@ -7,9 +7,6 @@ public class Utente {
     private String indirizzoCasa; 
     private int id = 0; 
 
-
-
-
     public Utente(String username, String password, String nome, String cognome, String telefono, String indirizzoCasa) {
         this.username = username;
         this.password = password;
@@ -19,9 +16,6 @@ public class Utente {
         this.indirizzoCasa = indirizzoCasa;
     }
 
-
-
-
     public Utente(String username, String password) {
         this.username = username;
         this.password = password;
@@ -29,9 +23,6 @@ public class Utente {
         // Incremento automatico dell'ID utente
         id++;
     }
-
-    
-
 
     public String getUsername() {
         return username;
@@ -78,20 +69,11 @@ public class Utente {
         this.indirizzoCasa = indirizzoCasa;
     }
 
-
-
-
     public int getId() {
         return id;
     }
 
-
-
-
     public void setId(int id) {
         this.id = id;
-    } 
-
-    
-
+    }  
 }
