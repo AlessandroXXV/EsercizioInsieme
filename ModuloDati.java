@@ -1,16 +1,19 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class ModuloDati 
 {
-    static List<Utente> utenti = new ArrayList<>();
+   // Attributi
+   ArrayList<Utente> utenti = new ArrayList<>();
 
-    public ModuloDati() {
-        
-    } 
-
-     public static boolean checkUsername(String username)
+   /**
+    * Metodo in grado di controllare l'esistenza di un utente
+    * @param username
+    * Username utente
+    * @return
+    * Restituisce "true" se l'utente esiste, altrimenti restituisce "false"
+    */
+   public boolean checkUsername(String username)
    {
       // Inizializzazione pessimistica
       boolean ris = false;
@@ -24,11 +27,15 @@ public class ModuloDati
             ris = true;
          }
       }
-
       return ris;
    }
 
-   public static boolean creazioneAccount()
+   /**
+    * Metod in grado di creare un account
+    * @return
+    * Restituisce "true" se l'account è stato creato, altrimenti restituisce "false"
+    */
+   public boolean creazioneAccount()
    {
       Scanner input = new Scanner(System.in); 
 
@@ -45,55 +52,192 @@ public class ModuloDati
          String password = input.nextLine();
          Utente utente = new Utente(username, password);
          utenti.add(utente);
-
-         System.out.println("Utente aggiunto");
+         System.out.println("Creazione account effettuata con successo");
 
          // Aggiorno lo stato del flag
          ris = true;
       }
       else
       {
-         System.out.println("Username già esistente");
+         System.out.println("ERRORE, USERNAME ESISTENTE");
          return false;
       }
-
-      return true;
+      return ris;
    }
 
-    public static void accesso()
-    {   
-        boolean accessoAccount = false;
-        int count = 5; 
-        Scanner scanner = new Scanner(System.in); 
-        do
-        {
-            System.out.println("Inserisci username e password");
-            
-            System.out.print("Username: ");
-            String username = scanner.nextLine(); 
+   /**
+    * Metodo in grado di effettuare l'accesso all'account
+    * @return
+    * Restituisce lo username dell'utente loggato
+    */
+   public String accesso()
+   {   
+      // Appoggio per memorizzare lo username dell'utente loggato
+      System.out.println("ACCESSO ACCOUNT");
+      String u = "";
 
-            System.out.print("Password: ");
-            String password = scanner.nextLine();
+      Scanner scanner = new Scanner(System.in);
+      boolean accessoAccount = false;
+      
+      do
+      {
+         System.out.print("Username: ");
+         String username = scanner.nextLine(); 
 
-            for(Utente utente : CreazioneAccount.utenti)
+         System.out.print("Password: ");
+         String password = scanner.nextLine();
+
+         for(int i = 0; i < utenti.size() && accessoAccount == false; i++)
+         {
+            if((username.equals(utenti.get(i).getUsername()) && (password.equals(utenti.get(i).getPassword()))))
             {
-                if((username.equals(utente.getUsername()) && (password.equals(utente.getPassword()))))
-                {
-                    System.out.println("Accesso effettuato");
-                    accessoAccount = true; 
-                }else 
-                {
-                    System.out.println("Le credenziali sono errate");
-                    count--; 
-                    accessoAccount = false; 
-                }
-                
+               System.out.println("ACCESSO EFFETTUATO CON SUCCESSO");
+               u = username;
+               accessoAccount = true;
+               System.out.println("flag: " + accessoAccount);
             }
-        
-        }while (accessoAccount = false); 
-    }
+            else 
+            {
+               System.out.println("ERRORE, CREDERNZIALI ERRATE");
+            }
+         }
+      }while(accessoAccount == false);
+      return u;
+   }
 
+   /**
+    * Metodo in grado di aggiungere informazioni all'utente loggato
+    */
+   public void create()
+   {
+      // Controllo se l'utente si è loggato
+      String ris = accesso();
+      if (ris.length() > 0) 
+      {     
+         System.out.println("INSERIMENTO INFORMAZIONI AGGIUNTIVE UTENTE");
+         Scanner input = new Scanner(System.in);
 
-    
+         // Inserimento nuove informazioni
+         System.out.println("Inserisci il tuo nome: ");
+         String nome = input.nextLine();
+         System.out.println("Inserisci il tuo cognome: ");
+         String cognome = input.nextLine();
+         System.out.println("Inserisci indirizzo: ");
+         String indirizzo = input.nextLine();
+         System.out.println("Inserisci il tuo numero di Telefono: ");
+         String numerotel = input.nextLine();
 
+         // Aggiornamento informazioni
+         for (Utente utente : utenti)
+         {
+            utente.setNome(nome);
+            utente.setCognome(cognome);
+            utente.setIndirizzoCasa(indirizzo);
+            utente.setTelefono(numerotel);
+         }
+      }
+   }
+   
+   /**
+    * Metodo in grado di leggere le informazioni dell'utente loggato
+    */
+   public void read()
+   {
+      System.out.println("LETTURA INFORMAZIONI UTENTE");
+
+      // Lettura utenti
+      if(utenti.size() > 0)
+      {
+         for (Utente utente : utenti)
+         {
+            System.out.println("Username: " + utente.getUsername());
+            System.out.println("Password: " + utente.getPassword());
+            System.out.println("Nome: " + utente.getNome());
+            System.out.println("Cognome: " + utente.getCognome());
+            System.out.println("Indirizzo: " + utente.getIndirizzoCasa());
+            System.out.println("Numero di telefono: " + utente.getTelefono());
+         }
+      }
+      else
+      {
+         System.out.println("ERRORE, NESSUN UTENTE PRESENTE");
+      }
+   }
+
+   /**
+    * Metodo in grado di modificare le informazioni dell'utente richiesto
+    */
+   public void update()
+   {
+      Scanner input = new Scanner(System.in);
+      System.out.println("UPDATE INFORMAZIONI UTENTE");
+      read();
+      System.out.println("Inserisci username utente a cui modificare le informazioni: ");
+      String username = input.nextLine();
+
+      // Controllo se esiste l'utente
+      boolean ris = checkUsername(username);
+
+      // Se l'utente esiste, allora aggiorno le informazioni
+      while(ris)
+      {
+
+      }
+      if(ris)
+      {
+         System.out.println("Inserisci il tuo nome: ");
+         String nome = input.nextLine();
+         System.out.println("Inserisci il tuo cognome: ");
+         String cognome = input.nextLine();
+         System.out.println("Inserisci indirizzo: ");
+         String indirizzo = input.nextLine();
+         System.out.println("Inserisci il tuo numero di Telefono: ");
+         String numerotel = input.nextLine();
+
+         // Aggiornamento informazioni
+         for (Utente utente : utenti)
+         {
+            utente.setNome(nome);
+            utente.setCognome(cognome);
+            utente.setIndirizzoCasa(indirizzo);
+            utente.setTelefono(numerotel);
+         }
+      }
+      else
+      {
+         System.out.println("ERRORE, UTENTE NON ESISTENTE");
+      }
+   }
+
+   /**
+    * Metodo in grado di eliminare un utente
+    */
+   public void delete()
+   {
+      Scanner input = new Scanner(System.in);
+      System.out.println("ELIMINAZIONE UTENTE");
+      System.out.println("Inserisci lo username dell'utente da eliminare:");
+      String username = input.nextLine();
+
+      // Controllo se esiste l'utente
+      boolean ris = checkUsername(username);
+
+      // Se l'utente esiste, allora lo elimino
+      if(ris)
+      {
+         // Ciclo l'array dell'utente
+         for(int i = 0; i < utenti.size(); i++)
+         {
+            // Elimino l'utente richiesto
+            if(utenti.get(i).getUsername().equals(username))
+            {
+               utenti.remove(i);
+            }
+         }
+      }
+      else
+      {
+         System.out.println("ERRORE, UTENTE NON ESISTENTE");
+      }
+   }
 }
