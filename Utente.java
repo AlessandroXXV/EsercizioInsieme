@@ -1,16 +1,16 @@
-public class Utente {
-    
+public class Utente { 
     private String username;
     private String password;
     private String nome; 
     private String cognome; 
-    private int telefono; 
+    private String telefono; 
     private String indirizzoCasa; 
+    private int id = 0; 
 
 
 
 
-    public Utente(String username, String password, String nome, String cognome, int telefono, String indirizzoCasa) {
+    public Utente(String username, String password, String nome, String cognome, String telefono, String indirizzoCasa) {
         this.username = username;
         this.password = password;
         this.nome = nome;
@@ -25,6 +25,9 @@ public class Utente {
     public Utente(String username, String password) {
         this.username = username;
         this.password = password;
+
+        // Incremento automatico dell'ID utente
+        id++;
     }
 
     
@@ -59,11 +62,11 @@ public class Utente {
         this.cognome = cognome;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String  telefono) {
         this.telefono = telefono;
     }
 
@@ -73,6 +76,20 @@ public class Utente {
 
     public void setIndirizzoCasa(String indirizzoCasa) {
         this.indirizzoCasa = indirizzoCasa;
+    }
+
+
+
+
+    public int getId() {
+        return id;
+    }
+
+
+
+
+    public void setId(int id) {
+        this.id = id;
     } 
 
     

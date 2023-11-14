@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ModuloDati 
 {
    // Attributi
    ArrayList<Utente> utenti = new ArrayList<>();
+   HashMap<Integer, String> hash = new HashMap<>(); 
 
    /**
     * Metodo in grado di controllare l'esistenza di un utente
@@ -35,35 +37,40 @@ public class ModuloDati
     * @return
     * Restituisce "true" se l'account è stato creato, altrimenti restituisce "false"
     */
-   public boolean creazioneAccount()
-   {
-      Scanner input = new Scanner(System.in); 
+    public boolean creazioneAccount()
+    {
+       Scanner input = new Scanner(System.in); 
+ 
+       // Creazione account
+       System.out.println("CREAZIONE ACCOUNT");
+       System.out.println("Inserisci username: ");
+       String username = input.nextLine();
+ 
+       // Controllo se lo username sia unico
+       boolean ris = checkUsername(username);
+       int idUtente; 
+       if(ris == false)
+       {
+          System.out.println("Inserisci password: ");
+          String password = input.nextLine();
+          Utente utente = new Utente(username, password);
+          utenti.add(utente);
+          System.out.println("Creazione account effettuata con successo");
 
-      // Creazione account
-      System.out.println("CREAZIONE ACCOUNT");
-      System.out.println("Inserisci username: ");
-      String username = input.nextLine();
-
-      // Controllo se lo username sia unico
-      boolean ris = checkUsername(username);
-      if(ris == false)
-      {
-         System.out.println("Inserisci password: ");
-         String password = input.nextLine();
-         Utente utente = new Utente(username, password);
-         utenti.add(utente);
-         System.out.println("Creazione account effettuata con successo");
-
-         // Aggiorno lo stato del flag
-         ris = true;
-      }
-      else
-      {
-         System.out.println("ERRORE, USERNAME ESISTENTE");
-         return false;
-      }
-      return ris;
-   }
+          // Memorizzo ID utente
+          idUtente = utente.getId(); 
+          hashing(idUtente);
+ 
+          // Aggiorno lo stato del flag
+          ris = true;
+       }
+       else
+       {
+          System.out.println("ERRORE, USERNAME ESISTENTE");
+          return false;
+       }
+       return ris;
+    }
 
    /**
     * Metodo in grado di effettuare l'accesso all'account
@@ -238,6 +245,18 @@ public class ModuloDati
       else
       {
          System.out.println("ERRORE, UTENTE NON ESISTENTE");
+      }
+   }
+
+
+   public void hashing(int id)
+   {
+      for (Utente utente : utenti)
+      {
+         if (id == utente.getId())
+         {
+            hash.put(id, utente.getPassword());  
+         }
       }
    }
 }
