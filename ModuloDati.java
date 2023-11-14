@@ -85,30 +85,37 @@ public class ModuloDati
 
       Scanner scanner = new Scanner(System.in);
       boolean accessoAccount = false;
+
+      // Contatore per limitare il numero di tentativi
+      int tentativi = 5; 
       
-      do
-      {
-         System.out.print("Username: ");
-         String username = scanner.nextLine(); 
-
-         System.out.print("Password: ");
-         String password = scanner.nextLine();
-
-         for(int i = 0; i < utenti.size() && accessoAccount == false; i++)
+         do
          {
-            if((username.equals(utenti.get(i).getUsername()) && (password.equals(utenti.get(i).getPassword()))))
+            System.out.print("Username: ");
+            String username = scanner.nextLine(); 
+
+            System.out.print("Password: ");
+            String password = scanner.nextLine();
+
+            for(int i = 0; i < utenti.size() && accessoAccount == false; i++)
             {
-               System.out.println("ACCESSO EFFETTUATO CON SUCCESSO");
-               u = username;
-               accessoAccount = true;
-               System.out.println("flag: " + accessoAccount);
+               if((username.equals(utenti.get(i).getUsername()) && (password.equals(utenti.get(i).getPassword()))))
+               {
+                  System.out.println("ACCESSO EFFETTUATO CON SUCCESSO");
+                  u = username;
+                  accessoAccount = true;
+                  System.out.println("flag: " + accessoAccount);
+               }
+               else 
+               {
+                  System.out.println("ERRORE, CREDERNZIALI ERRATE");
+                  tentativi--; 
+               }
             }
-            else 
-            {
-               System.out.println("ERRORE, CREDERNZIALI ERRATE");
-            }
-         }
-      }while(accessoAccount == false);
+         }while(accessoAccount == false && tentativi > 0);
+      
+         if(tentativi == 0) System.out.println("Tentativi rimasti 0, attendere e poi riprovare");
+      
       return u;
    }
 
@@ -186,10 +193,6 @@ public class ModuloDati
       boolean ris = checkUsername(username);
 
       // Se l'utente esiste, allora aggiorno le informazioni
-      while(ris)
-      {
-
-      }
       if(ris)
       {
          System.out.println("Inserisci il tuo nome: ");
@@ -258,5 +261,41 @@ public class ModuloDati
             hash.put(id, utente.getPassword());  
          }
       }
+   }
+
+   public void stampaHash()
+   {
+      System.out.println(hash);
+   }
+
+
+   /**
+    * Metodo in grado di cambiare la password di un utente
+    */
+    public void changePass()
+    {
+       Scanner input = new Scanner(System.in);
+       System.out.println("CAMBIO PASSWORD UTENTE.");
+       System.out.println("Inserisci lo username e la password dell'utente a cui vuoi modificare la password:");
+       System.out.print("Username: ");
+       String username = input.nextLine();
+
+       System.out.print("Pasdword: ");
+       String password = input.nextLine(); 
+ 
+       // Controllo se esiste l'utente
+      boolean ris = checkUsername(username);
+
+      for (Utente utente : utenti)
+      {
+         if (username.equals(utente.getUsername()) && (password.equals(utente.getPassword())))
+         {
+            System.out.print("Inserisci la nuova password: ");
+            String passwordNuova = input.nextLine();
+            utente.setPassword(passwordNuova);
+         }
+      }
+ 
+      
    }
 }
