@@ -1,12 +1,14 @@
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Main 
 {
-   public static void main(String[] args) 
+   public static void main(String[] args) throws IOException 
    {
-      ModuloDati moduloDati = new ModuloDati();
-      moduloDati.creazioneAccount();
-      moduloDati.create();
-      moduloDati.update();
-      moduloDati.delete();
-      moduloDati.read();
+      ArrayList<Utente> utenti = new ArrayList<>();
+
+      Menu menu = new Menu(utenti);
+      menu.menu();
+      
   }
 }
