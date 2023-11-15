@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -86,8 +87,9 @@ public class ModuloDati
     * Metodo in grado di effettuare l'accesso all'account
     * @return
     * Restituisce lo username dell'utente loggato
+    * @throws IOException
     */
-   public String accesso()
+   public String accesso() throws IOException
    {   
       // Appoggio per memorizzare lo username dell'utente loggato
       System.out.println("ACCESSO ACCOUNT");
@@ -109,7 +111,6 @@ public class ModuloDati
 
             for(int i = 0; i < utenti.size() && accessoAccount == false; i++)
             {
-               System.out.println("2");
                if((username.equals(utenti.get(i).getUsername()) && (password.equals(utenti.get(i).getPassword()))))
                {
                   System.out.println("ACCESSO EFFETTUATO CON SUCCESSO");
@@ -286,7 +287,7 @@ public class ModuloDati
       
    }
 
-   public void menuUtente(String nomeUtente)
+   public void menuUtente(String nomeUtente) throws IOException
    {
       System.out.println();
       System.out.println("Menu Utente");
