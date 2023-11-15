@@ -8,6 +8,7 @@ public class Backup {
     
     public static void backupDati(ArrayList<Utente> utenti)
     {
+        // Percorso del file
         String path = "C:\\Users\\aledr\\OneDrive - Politecnico di Milano\\LEZIONI\\MATERIE SPECIALISTICHE\\JavaWeb\\src\\EsercizioInsieme\\backup.txt"; 
         
         try
@@ -15,7 +16,7 @@ public class Backup {
             // Creo un oggetto di tipo File
             File file = new File(path);
 
-            // Se il file non esiste  lo creo
+            // Se il file non esiste lo creo
             if (!file.exists()) 
             {
                 file.createNewFile();
@@ -28,11 +29,12 @@ public class Backup {
             // leggo i valori e li memorizzo 
             for (Utente utente : utenti)
             {
+                // Scrittura dei dati nel file
                 bw.write("Username: " + utente.getUsername() + " Password: " + utente.getPassword() + " Nome: " + utente.getNome() +
                 " COgnome: " + utente.getCognome() + " Telefono: " + utente.getTelefono() + " Indirizzo: " + utente.getIndirizzoCasa() + " Id: " + utente.getId() + ";");
                 bw.newLine();
 
-                // Chiudo le risorso
+                // Chiudo le risorse
                 bw.close();
                 fw.close();
             }

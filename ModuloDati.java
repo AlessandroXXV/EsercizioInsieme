@@ -48,38 +48,38 @@ public class ModuloDati
     */
     public boolean creazioneAccount()
     {
-       Scanner input = new Scanner(System.in); 
- 
-       // Creazione account
-       System.out.println("CREAZIONE ACCOUNT");
-       System.out.println("Inserisci username: ");
-       String username = input.nextLine();
- 
-       // Controllo se lo username sia unico
-       boolean ris = checkUsername(username);
-       int idUtente; 
-       if(ris == false)
-       {
-          System.out.println("Inserisci password: ");
-          String password = input.nextLine();
-          Utente utente = new Utente(username, password);
+      Scanner input = new Scanner(System.in); 
 
-          utenti.add(utente);
-          System.out.println("Creazione account effettuata con successo");
+      // Creazione account
+      System.out.println("CREAZIONE ACCOUNT");
+      System.out.println("Inserisci username: ");
+      String username = input.nextLine();
 
-          // Memorizzo ID utente
-          idUtente = utente.getId(); 
-          hashing(idUtente);
- 
-          // Aggiorno lo stato del flag
-          ris = true;
-       }
-       else
-       {
+      // Controllo se lo username sia unico
+      boolean ris = checkUsername(username);
+      int idUtente; 
+      if(ris == false)
+      {
+         System.out.println("Inserisci password: ");
+         String password = input.nextLine();
+
+         // Creazione nuovo utente
+         Utente utente = new Utente(username, password);
+         utenti.add(utente);
+         System.out.println("Creazione account effettuata con successo");
+
+         // Memorizzo ID utente
+         idUtente = utente.getId(); 
+         hashing(idUtente);
+
+         // Aggiorno lo stato del flag
+         ris = true;
+      }
+      else
+      {
          System.out.println("ERRORE, USERNAME ESISTENTE");
          return false;
-       }
-
+      }
       return ris;
     }
 
@@ -91,55 +91,66 @@ public class ModuloDati
     */
    public String accesso() throws IOException
    {   
+      Scanner scanner = new Scanner(System.in);
+
       // Appoggio per memorizzare lo username dell'utente loggato
       System.out.println("ACCESSO ACCOUNT");
+
+      // Appoggio per memorizzare lo username dell'utente loggato
       String u = "";
 
-      Scanner scanner = new Scanner(System.in);
+      // Appoggio per ottimizzare il ciclo
       boolean accessoAccount = false;
 
       // Contatore per limitare il numero di tentativi
       int tentativi = 5; 
       
-         do
+      do
+      {
+         System.out.print("Username: ");
+         String username = scanner.nextLine(); 
+
+         System.out.print("Password: ");
+         String password = scanner.nextLine();
+
+         for(int i = 0; i < utenti.size() && accessoAccount == false; i++)
          {
-            System.out.print("Username: ");
-            String username = scanner.nextLine(); 
-
-            System.out.print("Password: ");
-            String password = scanner.nextLine();
-
-            for(int i = 0; i < utenti.size() && accessoAccount == false; i++)
+            if((username.equals(utenti.get(i).getUsername()) && (password.equals(utenti.get(i).getPassword()))))
             {
-               if((username.equals(utenti.get(i).getUsername()) && (password.equals(utenti.get(i).getPassword()))))
-               {
-                  System.out.println("ACCESSO EFFETTUATO CON SUCCESSO");
-                  u = username;
-                  accessoAccount = true;
-               }
-               else 
-               {
-                  System.out.println("ERRORE, CREDERNZIALI ERRATE");
-                  tentativi--; 
-               }
+               System.out.println("ACCESSO EFFETTUATO CON SUCCESSO");
+
+               // Memorizzo lo username dell'utente loggato
+               u = username;
+
+               // Aggiorno lo stato del flag
+               accessoAccount = true;
             }
-         }while(accessoAccount == false && tentativi > 0);
-      
-         if(tentativi == 0) 
-         {
-            System.out.println("Tentativi rimasti 0, attendere e poi riprovare");
-            menu.menu();
+            else 
+            {
+               System.out.println("ERRORE, CREDERNZIALI ERRATE");
+
+               // Aggiorno il numero di tentativi rimanenti
+               tentativi--; 
+            }
          }
-      
+      }while(accessoAccount == false && tentativi > 0);
+   
+      // Controllo il numero di tentativi
+      if(tentativi == 0) 
+      {
+         System.out.println("Tentativi rimasti 0, attendere e poi riprovare");
+         menu.menu();
+      }
       return u;
    }
 
    /**
     * Metodo in grado di aggiungere informazioni all'utente loggato
+    * @param nomeUtente
+    * Username utente per cui aggiungere le informazioni
     */
    public void create(String nomeUtente)
    {
-     
       System.out.println("INSERIMENTO INFORMAZIONI AGGIUNTIVE UTENTE");
       Scanner input = new Scanner(System.in);
 
@@ -163,13 +174,13 @@ public class ModuloDati
             utente.setIndirizzoCasa(indirizzo);
             utente.setTelefono(numerotel);
          }
-         
       }
-
    }
    
    /**
     * Metodo in grado di leggere le informazioni dell'utente loggato
+    * @param nomeUtente
+    * Username utente per leggere le informazioni
     */
    public void read(String nomeUtente)
    {
@@ -205,8 +216,8 @@ public class ModuloDati
    public void update()
    {
       Scanner input = new Scanner(System.in);
+      System.out.println();
       System.out.println("UPDATE INFORMAZIONI UTENTE");
-
       System.out.println("Inserisci il tuo nome: ");
       String nome = input.nextLine();
       System.out.println("Inserisci il tuo cognome: ");
@@ -224,11 +235,15 @@ public class ModuloDati
          utente.setIndirizzoCasa(indirizzo);
          utente.setTelefono(numerotel);
       }
+
+      // Memorizzo le informazioni all'interno di un file di testo
       Backup.backupDati(utenti);
    }
 
    /**
     * Metodo in grado di eliminare un utente
+    * @param nomeUtente
+    * Username utente da eliminare
     */
    public void delete(String nomeUtente)
    {
@@ -241,13 +256,18 @@ public class ModuloDati
          // Elimino l'utente richiesto
          if(utenti.get(i).getUsername().equals(nomeUtente))
          {
+            // Eliminazione utente
             utenti.remove(i);
             System.out.println("Utente eliminato con successo");
          }
       }
     }
 
-
+   /**
+    * Metodo in grado di memorizzare lo username e la password dell'utente in un HashMap
+    * @param id
+    * ID utente
+    */
    public void hashing(int id)
    {
       for (Utente utente : utenti)
@@ -259,15 +279,19 @@ public class ModuloDati
       }
    }
 
+   /**
+    * Metodo in grado di stampare l'HashMap
+    */
    public void stampaHash()
    {
       System.out.println(hash);
-      Backup.backupDati(utenti);
    }
 
 
    /**
     * Metodo in grado di cambiare la password di un utente
+    * @param nomeUtente
+    * Username utente per cambiare le informazioni dell'utente
     */
     public void changePass(String nomeUtente)
     {
@@ -276,18 +300,21 @@ public class ModuloDati
       System.out.print("Inserisci la nuova password:");
       String password = input.nextLine();
 
-
       for (Utente utente : utenti)
       {
          if (nomeUtente.equals(utente.getUsername()))
          {
+            // Cambio password utente
             utente.setPassword(password);
          }
-      }
- 
-      
+      }    
    }
 
+   /**
+    * Metodo in grado di visualizzare il menu utente
+    * @param nomeUtente
+    * Username utente loggato
+    */
    public void menuUtente(String nomeUtente) throws IOException
    {
       System.out.println();
@@ -328,7 +355,6 @@ public class ModuloDati
                menu.menu();
                break;
          }
-      }while (scelta > 0 && scelta < 5);
-      
+      }while (scelta > 0 && scelta < 5);   
    }
 }

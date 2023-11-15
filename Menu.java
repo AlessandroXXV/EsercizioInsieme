@@ -13,17 +13,15 @@ public class Menu
         this.utenti = utenti;
     }
 
+    /**
+     * Metodo in grado di visualizzare il menu principale
+     */
     public void menu() throws IOException
     {
-
         try
-        {
-            // Menu che usa tutte le funzioni di ModuloDati con un'interfaccia grafica
-        
+        {      
             // Istanza oggetto input
-            Scanner input = new Scanner(System.in);
-
-            // Menu
+            Scanner input = new Scanner(System.in); 
             int scelta = 0; 
 
             do{
@@ -64,8 +62,7 @@ public class Menu
         }catch (Exception e) {
             System.out.println("Errore: Non sai scrivere" );
             menu();
-        }
-        
+        } 
     }
 }
     

@@ -9,7 +9,7 @@ public class Main
 
       // Istanza oggetto Menu
       Menu menu = new Menu(utenti);
-
+      
       // Visualizzazione menu principale
       menu.menu();
   }
