@@ -62,7 +62,7 @@ public class Menu
 
             }while(scelta>0 && scelta<3);
         }catch (Exception e) {
-            System.out.println("Errore: SEI UN COGLIONE PORCA TROIA" );
+            System.out.println("Errore: Non sai scrivere" );
             menu();
         }
         

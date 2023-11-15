@@ -7,8 +7,10 @@ public class Main
    {
       ArrayList<Utente> utenti = new ArrayList<>();
 
+      // Istanza oggetto Menu
       Menu menu = new Menu(utenti);
-      menu.menu();
 
+      // Visualizzazione menu principale
+      menu.menu();
   }
 }
