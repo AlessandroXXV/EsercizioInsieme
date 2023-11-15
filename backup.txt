@@ -1,2 +1,0 @@
-Username: ale Password: 1234 Nome: Alessandro COgnome: D'Angelo Telefono: 2234566 Indirizzo: via Id: 1;
-Username: ale Password: 1234 Nome: Davide COgnome: Gusrella Telefono: 5869449 Indirizzo: via gico Id: 1;
