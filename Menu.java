@@ -57,7 +57,7 @@ public class Menu
 
                     case 3:
                             System.out.println("Arrivederci!");
-                            break;
+                            System.exit(0);
                 }
 
             }while(scelta>0 && scelta<3);

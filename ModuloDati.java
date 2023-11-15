@@ -224,6 +224,7 @@ public class ModuloDati
          utente.setIndirizzoCasa(indirizzo);
          utente.setTelefono(numerotel);
       }
+      Backup.backupDati(utenti);
    }
 
    /**
@@ -327,7 +328,7 @@ public class ModuloDati
                menu.menu();
                break;
          }
-      }while (scelta > 0 && scelta < 4);
+      }while (scelta > 0 && scelta < 5);
       
    }
 }
