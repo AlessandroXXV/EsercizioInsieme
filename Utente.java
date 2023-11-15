@@ -1,20 +1,9 @@
 public class Utente { 
     private String username;
     private String password;
-    private String nome; 
-    private String cognome; 
-    private String telefono; 
-    private String indirizzoCasa; 
-    private int id = 0; 
 
-    public Utente(String username, String password, String nome, String cognome, String telefono, String indirizzoCasa) {
-        this.username = username;
-        this.password = password;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.telefono = telefono;
-        this.indirizzoCasa = indirizzoCasa;
-    }
+
+
 
     public Utente(String username, String password) {
         this.username = username;
@@ -23,7 +12,7 @@ public class Utente {
         // Incremento automatico dell'ID utente
         id++;
     }
-
+    
     public String getUsername() {
         return username;
     }
